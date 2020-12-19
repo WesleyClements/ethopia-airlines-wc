@@ -1,9 +1,10 @@
-package com.smoothstack.ethopiaairlines.controller;
+package com.smoothstack.uthopia.controller;
 
 import java.util.List;
+import java.util.Optional;
 
-import com.smoothstack.ethopiaairlines.dao.AirportDAO;
-import com.smoothstack.ethopiaairlines.model.Airport;
+import com.smoothstack.uthopia.dao.AirportDAO;
+import com.smoothstack.uthopia.model.Airport;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,17 +23,17 @@ public class AirportController {
 
   @GetMapping("")
   public @ResponseBody List<Airport> getAirports() {
-    return airportDAO.getAirports();
+    return airportDAO.findAll();
   }
 
   @GetMapping("/{id}")
-  public @ResponseBody Airport getAirportById(@PathVariable final String id) {
-    return airportDAO.getAirport(id);
+  public @ResponseBody Optional<Airport> getAirportById(@PathVariable final String id) {
+    return airportDAO.findById(id);
   }
 
   @PostMapping("")
   public @ResponseBody Airport createAirport(@RequestBody final Airport airport) {
-    airportDAO.createAirport(airport);
+    airportDAO.save(airport);
     return airport;
   }
 }

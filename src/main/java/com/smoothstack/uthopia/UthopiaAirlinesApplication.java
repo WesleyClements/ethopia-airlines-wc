@@ -1,4 +1,4 @@
-package com.smoothstack.ethopiaairlines;
+package com.smoothstack.uthopia;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
