@@ -11,7 +11,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebMvcConfig implements WebMvcConfigurer {
   @Override
   public void configureContentNegotiation(final ContentNegotiationConfigurer config) {
-    config.favorParameter(false).parameterName("format").ignoreAcceptHeader(false).useRegisteredExtensionsOnly(true);
     config.defaultContentType(MediaType.APPLICATION_JSON).mediaType("xml", MediaType.APPLICATION_XML).mediaType("json",
         MediaType.APPLICATION_JSON);
   }
