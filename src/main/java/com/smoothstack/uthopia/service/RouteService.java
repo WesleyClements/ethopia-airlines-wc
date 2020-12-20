@@ -26,20 +26,20 @@ public class RouteService {
     return routeDAO.findAll();
   }
 
-  public Route findById(final Integer id) {
-    final Optional<Route> optional = routeDAO.findById(id);
-    if (!optional.isPresent())
-      throw new EntityNotFoundException("cannot find route with id: " + id);
-    return optional.get();
-  }
-
-  public List<Route> findByOriginAndDestination(final String origin, final String destination) {
+  public List<Route> findAllWithOriginAndDestination(final String origin, final String destination) {
     if (destination == null)
       return routeDAO.findByOriginIataId(origin);
     else if (origin == null)
       return routeDAO.findByDestinationIataId(destination);
     else
       return routeDAO.findByOriginIataIdAndDestinationIataId(origin, destination);
+  }
+
+  public Route findById(final Integer id) {
+    final Optional<Route> optional = routeDAO.findById(id);
+    if (!optional.isPresent())
+      throw new EntityNotFoundException("cannot find route with id: " + id);
+    return optional.get();
   }
 
   public Route create(final RouteDTO routeDTO) throws BadRequestException {
