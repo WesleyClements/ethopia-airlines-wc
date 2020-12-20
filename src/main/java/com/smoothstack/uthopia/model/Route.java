@@ -5,8 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.GenerationType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -17,31 +15,29 @@ public class Route {
   @Column(name = "route_id")
   private Integer routeId;
 
-  @ManyToOne
-  @JoinColumn(name = "origin_airport_id", nullable = false)
-  private Airport origin;
+  @Column(name = "origin_id")
+  private String origin;
 
-  @ManyToOne
-  @JoinColumn(name = "destination_airport_id", nullable = false)
-  private Airport destination;
+  @Column(name = "destination_id")
+  private String destination;
 
   public Integer getRouteId() {
     return routeId;
   }
 
-  public Airport getOrigin() {
+  public String getOrigin() {
     return origin;
   }
 
-  public void setOrigin(final Airport origin) {
+  public void setOrigin(final String origin) {
     this.origin = origin;
   }
 
-  public Airport getDestination() {
+  public String getDestination() {
     return destination;
   }
 
-  public void setDestination(final Airport destination) {
+  public void setDestination(final String destination) {
     this.destination = destination;
   }
 
