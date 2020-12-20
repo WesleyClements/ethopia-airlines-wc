@@ -29,4 +29,20 @@ public class Route {
     return routeId;
   }
 
+  public Airport getOrigin() {
+    return origin;
+  }
+
+  public void setOrigin(final Airport origin) {
+    this.origin = origin;
+  }
+
+  public Airport getDestination() {
+    return destination;
+  }
+
+  public void setDestination(final Airport destination) {
+    this.destination = destination;
+  }
+
 }
