@@ -1,4 +1,4 @@
-package com.smoothstack.exception;
+package com.smoothstack.uthopia.exception;
 
 public class BadRequestException extends Exception {
 
