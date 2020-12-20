@@ -9,5 +9,4 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AirportDAO extends JpaRepository<Airport, String> {
 
-  List<Airport> findAll();
 }
