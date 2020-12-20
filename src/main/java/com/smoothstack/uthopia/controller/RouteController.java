@@ -3,9 +3,7 @@ package com.smoothstack.uthopia.controller;
 import java.util.List;
 import java.util.Map;
 
-import com.smoothstack.exception.BadRequestException;
 import com.smoothstack.uthopia.model.Route;
-import com.smoothstack.uthopia.model.RouteDTO;
 import com.smoothstack.uthopia.service.RouteService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +38,7 @@ public class RouteController {
   }
 
   @PostMapping("")
-  public @ResponseBody Route getRouteById(@RequestBody final RouteDTO routeDTO) throws BadRequestException {
-    return routeService.create(routeDTO);
+  public @ResponseBody Route getRouteById(@RequestBody final Route route) {
+    return routeService.create(route);
   }
 }
