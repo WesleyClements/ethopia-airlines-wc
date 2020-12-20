@@ -32,7 +32,7 @@ public class AirportController {
   public @ResponseBody Airport getAirportById(@PathVariable final String id) throws Exception {
     final Optional<Airport> optional = airportDAO.findById(id);
     if (!optional.isPresent())
-      throw new EntityNotFoundException();
+      throw new EntityNotFoundException("cannot find airport with id: " + id);
     return optional.get();
   }
 
