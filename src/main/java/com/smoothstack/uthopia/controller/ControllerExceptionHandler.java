@@ -2,7 +2,7 @@ package com.smoothstack.uthopia.controller;
 
 import javax.persistence.EntityNotFoundException;
 
-import com.smoothstack.exception.BadRequestException;
+import com.smoothstack.uthopia.exception.BadRequestException;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
