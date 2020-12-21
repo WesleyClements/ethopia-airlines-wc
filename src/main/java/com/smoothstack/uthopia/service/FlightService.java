@@ -3,6 +3,8 @@ package com.smoothstack.uthopia.service;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityNotFoundException;
+
 import com.smoothstack.uthopia.dao.FlightDAO;
 import com.smoothstack.uthopia.dao.RouteDAO;
 import com.smoothstack.uthopia.exception.BadRequestException;
@@ -33,10 +35,12 @@ public class FlightService {
   }
 
   public Flight create(final Flight flight) throws BadRequestException {
-    flight.setRoute(routeDAO.getOne(flight.getRouteId()));
     try {
+      flight.setRoute(routeDAO.getOne(flight.getRouteId()));
       flightDAO.save(flight);
     } catch (DataIntegrityViolationException e) {
+      throw new BadRequestException();
+    } catch (EntityNotFoundException e) {
       throw new BadRequestException();
     }
     return flight;
