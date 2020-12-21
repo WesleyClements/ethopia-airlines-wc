@@ -33,7 +33,7 @@ public class FlightController {
     if (origin == null && destination == null && departure == null)
       return flightService.findAll();
     else if (departure == null)
-      return flightService.findAllWithOriginAndDeparture(origin, destination);
+      return flightService.findAllWithOriginAndDestination(origin, destination);
     else {
       final LocalDate departureDate = LocalDate.parse(departure);
       return flightService.findAllWithOriginAndDestinationAndDepartureDate(origin, destination, departureDate);
