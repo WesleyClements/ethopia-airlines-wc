@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Formula;
+
 @Entity
 @Table(name = "flight")
 public class Flight {
@@ -25,6 +27,9 @@ public class Flight {
 
   @Column(name = "capacity")
   private Integer capacity;
+
+  @Formula("capacity")
+  private Integer availableSeats;
 
   @Column(name = "capacity")
   private Double seatPrice;
