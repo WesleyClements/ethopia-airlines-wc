@@ -22,18 +22,18 @@ public class AirportController {
   @Autowired
   private AirportService airportService;
 
-  @GetMapping("")
+  @GetMapping
   public @ResponseBody List<Airport> getAirports() {
     return airportService.findAll();
+  }
+
+  @PostMapping
+  public @ResponseBody Airport createAirport(@RequestBody final Airport airport) throws BadRequestException {
+    return airportService.create(airport);
   }
 
   @GetMapping("/{id}")
   public @ResponseBody Airport getAirportById(@PathVariable final String id) throws NotFoundException {
     return airportService.findById(id);
-  }
-
-  @PostMapping("")
-  public @ResponseBody Airport createAirport(@RequestBody final Airport airport) throws BadRequestException {
-    return airportService.create(airport);
   }
 }
