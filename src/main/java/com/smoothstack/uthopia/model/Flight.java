@@ -24,7 +24,7 @@ import org.hibernate.annotations.Formula;
 @Table(name = "flight")
 public class Flight {
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "flight_id")
   private Integer flightId;
 

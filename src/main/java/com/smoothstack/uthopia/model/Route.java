@@ -20,7 +20,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @Table(name = "route")
 public class Route {
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "route_id")
   private Integer routeId;
 
