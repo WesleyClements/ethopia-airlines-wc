@@ -3,6 +3,7 @@ package com.smoothstack.uthopia.controller;
 import java.util.List;
 import java.util.Map;
 
+import com.smoothstack.uthopia.exception.BadRequestException;
 import com.smoothstack.uthopia.exception.NotFoundException;
 import com.smoothstack.uthopia.model.Route;
 import com.smoothstack.uthopia.service.RouteService;
@@ -39,7 +40,7 @@ public class RouteController {
   }
 
   @PostMapping("")
-  public @ResponseBody Route getRouteById(@RequestBody final Route route) {
+  public @ResponseBody Route getRouteById(@RequestBody final Route route) throws BadRequestException {
     return routeService.create(route);
   }
 }
