@@ -11,16 +11,16 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import org.hibernate.annotations.Formula;
 
 @XmlRootElement
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "flightId")
 @Entity
 @Table(name = "flight")
 public class Flight {
@@ -32,17 +32,20 @@ public class Flight {
   @Column(name = "route_id", insertable = false, updatable = false)
   private Integer routeId;
 
-  @JsonManagedReference
+  @JsonIgnore
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "route_id")
   private Route route;
 
+  @JsonProperty("departure")
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Etc/GMT")
   @Column(name = "departure_time")
   private LocalDateTime departureTime;
 
   @Column(name = "capacity")
   private Integer capacity;
 
+  @Transient
   @Formula("capacity")
   private Integer availableSeats;
 
@@ -73,6 +76,14 @@ public class Flight {
     this.route = route;
   }
 
+  public String getOrigin() {
+    return this.route.getOriginId();
+  }
+
+  public String getDestination() {
+    return this.route.getDestinationId();
+  }
+
   public LocalDateTime getDepartureTime() {
     return departureTime;
   }
@@ -87,6 +98,10 @@ public class Flight {
 
   public void setCapacity(final Integer capacity) {
     this.capacity = capacity;
+  }
+
+  public Integer getAvailableSeats() {
+    return availableSeats;
   }
 
   public Double getSeatPrice() {
