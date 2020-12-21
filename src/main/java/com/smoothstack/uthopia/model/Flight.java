@@ -31,7 +31,7 @@ public class Flight {
   @Formula("capacity")
   private Integer availableSeats;
 
-  @Column(name = "capacity")
+  @Column(name = "seat_price")
   private Double seatPrice;
 
   public Integer getFlightId() {
