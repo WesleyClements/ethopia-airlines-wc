@@ -4,6 +4,8 @@ import com.smoothstack.uthopia.exception.BadRequestException;
 import com.smoothstack.uthopia.exception.NotFoundException;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.web.HttpMediaTypeNotAcceptableException;
+import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -18,6 +20,16 @@ public class ControllerExceptionHandler {
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   @ExceptionHandler(BadRequestException.class)
   public void handleBadRequest() {
+  }
+
+  @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
+  @ExceptionHandler(HttpMediaTypeNotAcceptableException.class)
+  public void handleNotAcceptableMediaType() {
+  }
+
+  @ResponseStatus(HttpStatus.UNSUPPORTED_MEDIA_TYPE)
+  @ExceptionHandler(HttpMediaTypeNotSupportedException.class)
+  public void handleUnsupportedMediaType() {
   }
 
   @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
