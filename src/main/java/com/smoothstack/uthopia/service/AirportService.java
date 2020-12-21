@@ -3,9 +3,8 @@ package com.smoothstack.uthopia.service;
 import java.util.List;
 import java.util.Optional;
 
-import javax.persistence.EntityNotFoundException;
-
 import com.smoothstack.uthopia.dao.AirportDAO;
+import com.smoothstack.uthopia.exception.NotFoundException;
 import com.smoothstack.uthopia.model.Airport;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +19,10 @@ public class AirportService {
     return airportDAO.findAll();
   }
 
-  public Airport findById(final String id) throws EntityNotFoundException {
+  public Airport findById(final String id) throws NotFoundException {
     final Optional<Airport> optional = airportDAO.findById(id);
     if (!optional.isPresent())
-      throw new EntityNotFoundException("cannot find airport with id: " + id);
+      throw new NotFoundException("cannot find airport with id: " + id);
     return optional.get();
   }
 

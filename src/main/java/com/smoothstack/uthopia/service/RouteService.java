@@ -3,9 +3,8 @@ package com.smoothstack.uthopia.service;
 import java.util.List;
 import java.util.Optional;
 
-import javax.persistence.EntityNotFoundException;
-
 import com.smoothstack.uthopia.dao.RouteDAO;
+import com.smoothstack.uthopia.exception.NotFoundException;
 import com.smoothstack.uthopia.model.Route;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,10 +28,10 @@ public class RouteService {
       return routeDAO.findAllByOriginAndDestination(origin, destination);
   }
 
-  public Route findById(final Integer id) {
+  public Route findById(final Integer id) throws NotFoundException {
     final Optional<Route> optional = routeDAO.findById(id);
     if (!optional.isPresent())
-      throw new EntityNotFoundException("cannot find route with id: " + id);
+      throw new NotFoundException("cannot find route with id: " + id);
     return optional.get();
   }
 
