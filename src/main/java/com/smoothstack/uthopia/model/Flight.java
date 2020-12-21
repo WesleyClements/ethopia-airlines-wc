@@ -11,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -45,7 +44,7 @@ public class Flight {
   @Column(name = "capacity")
   private Integer capacity;
 
-  @Formula("capacity")
+  @Formula("capacity - (SELECT COUNT(a.flight_id) FROM flight_bookings AS a WHERE a.flight_id=flight_id)")
   private Integer availableSeats;
 
   @Column(name = "seat_price")
