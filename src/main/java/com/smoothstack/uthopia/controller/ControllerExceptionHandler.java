@@ -19,4 +19,11 @@ public class ControllerExceptionHandler {
   @ExceptionHandler(BadRequestException.class)
   public void handleBadRequest() {
   }
+
+  @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+  @ExceptionHandler(Exception.class)
+  public void handle(final Exception e) {
+    System.out.println(e.getClass());
+    System.out.println(e.getMessage());
+  }
 }
