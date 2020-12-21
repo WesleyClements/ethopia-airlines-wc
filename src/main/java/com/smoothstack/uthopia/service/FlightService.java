@@ -28,7 +28,15 @@ public class FlightService {
     return flightDAO.findAll();
   }
 
-  public List<Flight> findAllWithOriginAndDeparture(final String origin, final String destination) {
+  public List<Flight> findAllWithDepartureDate(final LocalDate departureDate) {
+    if (departureDate == null)
+      return flightDAO.findAll();
+    else
+      return flightDAO.findAllByDepartureTimeAfterAndDepartureTimeBefore(departureDate.atStartOfDay(),
+          departureDate.atStartOfDay().plusDays(1));
+  }
+
+  public List<Flight> findAllWithOriginAndDestination(final String origin, final String destination) {
     if (destination == null && origin == null)
       return flightDAO.findAll();
     else if (destination == null)
@@ -43,20 +51,19 @@ public class FlightService {
       final LocalDate departureDate) {
     if (origin == null && destination == null && departureDate == null)
       return flightDAO.findAll();
-    else if (destination == null && departureDate == null)
-      return flightDAO.findAllByRouteOriginId(origin);
-    else if (origin == null && departureDate == null)
-      return flightDAO.findAllByRouteDestinationId(destination);
-    else if (origin == null && destination == null)
-      return flightDAO.findAllByDepartureDate(departureDate);
     else if (departureDate == null)
-      return flightDAO.findAllByRouteOriginIdAndRouteDestinationId(origin, destination);
+      return findAllWithOriginAndDestination(origin, destination);
+    else if (origin == null && destination == null)
+      return findAllWithDepartureDate(departureDate);
     else if (destination == null)
-      return flightDAO.findAllByRouteOriginIdAndDepartureDate(origin, departureDate);
+      return flightDAO.findAllByRouteOriginIdAndDepartureTimeAfterAndDepartureTimeBefore(origin,
+          departureDate.atStartOfDay(), departureDate.atStartOfDay().plusDays(1));
     else if (origin == null)
-      return flightDAO.findAllByRouteDestinationIdAndDepartureDate(destination, departureDate);
+      return flightDAO.findAllByRouteDestinationIdAndDepartureTimeAfterAndDepartureTimeBefore(destination,
+          departureDate.atStartOfDay(), departureDate.atStartOfDay().plusDays(1));
     else
-      return flightDAO.findAllByRouteOriginIdAndRouteDestinationIdAndDepartureDate(origin, destination, departureDate);
+      return flightDAO.findAllByRouteOriginIdAndRouteDestinationIdAndDepartureTimeAfterAndDepartureTimeBefore(origin,
+          destination, departureDate.atStartOfDay(), departureDate.atStartOfDay().plusDays(1));
   }
 
   public Flight findById(final Integer id) throws NotFoundException {
