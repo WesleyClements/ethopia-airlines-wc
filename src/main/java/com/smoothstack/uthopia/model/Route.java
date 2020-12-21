@@ -23,7 +23,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @Entity
 @Table(name = "route")
 public class Route {
-  @JsonIgnore
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "route_id")
@@ -47,7 +46,6 @@ public class Route {
   @JoinColumn(name = "destination_id")
   private Airport destination;
 
-  @JsonBackReference
   @OneToMany(mappedBy = "route", fetch = FetchType.LAZY)
   private Set<Flight> flights = new HashSet<>();
 
