@@ -8,9 +8,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import org.hibernate.annotations.Formula;
 
+@XmlRootElement
 @Entity
 @Table(name = "flight")
 public class Flight {
