@@ -1,5 +1,6 @@
 package com.smoothstack.uthopia.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,6 +26,37 @@ public class FlightService {
 
   public List<Flight> findAll() {
     return flightDAO.findAll();
+  }
+
+  public List<Flight> findAllWithOriginAndDeparture(final String origin, final String destination) {
+    if (destination == null && origin == null)
+      return flightDAO.findAll();
+    else if (destination == null)
+      return flightDAO.findAllByRouteOriginId(origin);
+    else if (origin == null)
+      return flightDAO.findAllByRouteDestinationId(destination);
+    else
+      return flightDAO.findAllByRouteOriginIdAndRouteDestinationId(origin, destination);
+  }
+
+  public List<Flight> findAllWithOriginAndDestinationAndDepartureDate(final String origin, final String destination,
+      final LocalDate departureDate) {
+    if (origin == null && destination == null && departureDate == null)
+      return flightDAO.findAll();
+    else if (destination == null && departureDate == null)
+      return flightDAO.findAllByRouteOriginId(origin);
+    else if (origin == null && departureDate == null)
+      return flightDAO.findAllByRouteDestinationId(destination);
+    else if (origin == null && destination == null)
+      return flightDAO.findAllByDepartureDate(departureDate);
+    else if (departureDate == null)
+      return flightDAO.findAllByRouteOriginIdAndRouteDestinationId(origin, destination);
+    else if (destination == null)
+      return flightDAO.findAllByRouteOriginIdAndDepartureDate(origin, departureDate);
+    else if (origin == null)
+      return flightDAO.findAllByRouteDestinationIdAndDepartureDate(destination, departureDate);
+    else
+      return flightDAO.findAllByRouteOriginIdAndRouteDestinationIdAndDepartureDate(origin, destination, departureDate);
   }
 
   public Flight findById(final Integer id) throws NotFoundException {
