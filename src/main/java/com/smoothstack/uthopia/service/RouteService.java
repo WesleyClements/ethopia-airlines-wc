@@ -3,7 +3,6 @@ package com.smoothstack.uthopia.service;
 import java.util.List;
 import java.util.Optional;
 
-import com.smoothstack.uthopia.dao.AirportDAO;
 import com.smoothstack.uthopia.dao.RouteDAO;
 import com.smoothstack.uthopia.exception.BadRequestException;
 import com.smoothstack.uthopia.exception.NotFoundException;
@@ -17,8 +16,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class RouteService {
-  @Autowired
-  private AirportDAO airportDAO;
   @Autowired
   private RouteDAO routeDAO;
 
@@ -46,8 +43,6 @@ public class RouteService {
 
   public Route create(final Route route) throws BadRequestException {
     try {
-      route.setOrigin(airportDAO.getOne(route.getOriginId()));
-      route.setDestination(airportDAO.getOne(route.getDestinationId()));
       routeDAO.save(route);
     } catch (JpaSystemException e) {
       System.out.println(e.getCause());
