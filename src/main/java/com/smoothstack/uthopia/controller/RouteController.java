@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.smoothstack.uthopia.exception.BadRequestException;
 import com.smoothstack.uthopia.exception.NotFoundException;
+import com.smoothstack.uthopia.exception.StateConflictException;
 import com.smoothstack.uthopia.model.Route;
 import com.smoothstack.uthopia.service.RouteService;
 
@@ -38,7 +39,8 @@ public class RouteController {
   }
 
   @PostMapping
-  public @ResponseBody ResponseEntity<Route> getRouteById(@RequestBody final Route route) throws BadRequestException {
+  public @ResponseBody ResponseEntity<Route> getRouteById(@RequestBody final Route route)
+      throws BadRequestException, StateConflictException {
     return new ResponseEntity<>(routeService.create(route), HttpStatus.CREATED);
   }
 

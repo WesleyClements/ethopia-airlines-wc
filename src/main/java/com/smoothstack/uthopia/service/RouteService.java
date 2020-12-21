@@ -6,8 +6,10 @@ import java.util.Optional;
 import com.smoothstack.uthopia.dao.RouteDAO;
 import com.smoothstack.uthopia.exception.BadRequestException;
 import com.smoothstack.uthopia.exception.NotFoundException;
+import com.smoothstack.uthopia.exception.StateConflictException;
 import com.smoothstack.uthopia.model.Route;
 
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -41,13 +43,19 @@ public class RouteService {
     return optional.get();
   }
 
-  public Route create(final Route route) throws BadRequestException {
+  public Route create(final Route route) throws BadRequestException, StateConflictException {
     try {
       routeDAO.save(route);
     } catch (JpaSystemException e) {
       System.out.println(e.getCause());
       throw new BadRequestException(e.getMessage());
     } catch (DataIntegrityViolationException e) {
+      if (e.getCause() instanceof ConstraintViolationException) {
+        final ConstraintViolationException cve = (ConstraintViolationException) e.getCause();
+        if (cve.getErrorCode() == 1062)
+          throw new StateConflictException(route.getOriginId() + " to " + route.getDestinationId() + " already exists");
+        System.out.println(cve);
+      }
       throw new BadRequestException();
     }
     return route;
