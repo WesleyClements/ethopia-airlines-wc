@@ -3,6 +3,7 @@ package com.smoothstack.uthopia.controller;
 import java.util.List;
 import java.util.Map;
 
+import com.smoothstack.uthopia.exception.NotFoundException;
 import com.smoothstack.uthopia.model.Route;
 import com.smoothstack.uthopia.service.RouteService;
 
@@ -33,7 +34,7 @@ public class RouteController {
   }
 
   @GetMapping("/{id}")
-  public @ResponseBody Route getRouteById(@PathVariable final Integer id) {
+  public @ResponseBody Route getRouteById(@PathVariable final Integer id) throws NotFoundException {
     return routeService.findById(id);
   }
 

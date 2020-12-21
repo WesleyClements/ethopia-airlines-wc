@@ -2,6 +2,7 @@ package com.smoothstack.uthopia.controller;
 
 import java.util.List;
 
+import com.smoothstack.uthopia.exception.NotFoundException;
 import com.smoothstack.uthopia.model.Airport;
 import com.smoothstack.uthopia.service.AirportService;
 
@@ -26,7 +27,7 @@ public class AirportController {
   }
 
   @GetMapping("/{id}")
-  public @ResponseBody Airport getAirportById(@PathVariable final String id) {
+  public @ResponseBody Airport getAirportById(@PathVariable final String id) throws NotFoundException {
     return airportService.findById(id);
   }
 
