@@ -9,6 +9,9 @@ import com.smoothstack.uthopia.model.Route;
 import com.smoothstack.uthopia.service.RouteService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,7 +27,7 @@ public class RouteController {
   @Autowired
   private RouteService routeService;
 
-  @GetMapping("")
+  @GetMapping
   public @ResponseBody List<Route> getRoutes(@RequestParam final Map<String, String> params) {
     final String origin = params.get("origin");
     final String destination = params.get("destination");
@@ -34,13 +37,19 @@ public class RouteController {
       return routeService.findAllWithOriginAndDestination(origin, destination);
   }
 
+  @PostMapping
+  public @ResponseBody Route getRouteById(@RequestBody final Route route) throws BadRequestException {
+    return routeService.create(route);
+  }
+
   @GetMapping("/{id}")
   public @ResponseBody Route getRouteById(@PathVariable final Integer id) throws NotFoundException {
     return routeService.findById(id);
   }
 
-  @PostMapping("")
-  public @ResponseBody Route getRouteById(@RequestBody final Route route) throws BadRequestException {
-    return routeService.create(route);
+  @DeleteMapping("/{id}")
+  public ResponseEntity<Object> deleteRoute(@PathVariable final Integer id) throws NotFoundException {
+    routeService.delete(id);
+    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
   }
 }
