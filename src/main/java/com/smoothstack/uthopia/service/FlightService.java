@@ -4,10 +4,12 @@ import java.util.List;
 import java.util.Optional;
 
 import com.smoothstack.uthopia.dao.FlightDAO;
+import com.smoothstack.uthopia.exception.BadRequestException;
 import com.smoothstack.uthopia.exception.NotFoundException;
 import com.smoothstack.uthopia.model.Flight;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -26,8 +28,12 @@ public class FlightService {
     return optional.get();
   }
 
-  public Flight create(final Flight flight) {
-    flightDAO.save(flight);
+  public Flight create(final Flight flight) throws BadRequestException {
+    try {
+      flightDAO.save(flight);
+    } catch (DataIntegrityViolationException e) {
+      throw new BadRequestException();
+    }
     return flight;
   }
 }

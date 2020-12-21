@@ -2,6 +2,7 @@ package com.smoothstack.uthopia.controller;
 
 import java.util.List;
 
+import com.smoothstack.uthopia.exception.BadRequestException;
 import com.smoothstack.uthopia.exception.NotFoundException;
 import com.smoothstack.uthopia.model.Airport;
 import com.smoothstack.uthopia.service.AirportService;
@@ -32,7 +33,7 @@ public class AirportController {
   }
 
   @PostMapping("")
-  public @ResponseBody Airport createAirport(@RequestBody final Airport airport) {
+  public @ResponseBody Airport createAirport(@RequestBody final Airport airport) throws BadRequestException {
     return airportService.create(airport);
   }
 }

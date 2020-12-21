@@ -4,10 +4,12 @@ import java.util.List;
 import java.util.Optional;
 
 import com.smoothstack.uthopia.dao.AirportDAO;
+import com.smoothstack.uthopia.exception.BadRequestException;
 import com.smoothstack.uthopia.exception.NotFoundException;
 import com.smoothstack.uthopia.model.Airport;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -26,8 +28,12 @@ public class AirportService {
     return optional.get();
   }
 
-  public Airport create(final Airport airport) {
-    airportDAO.save(airport);
+  public Airport create(final Airport airport) throws BadRequestException {
+    try {
+      airportDAO.save(airport);
+    } catch (DataIntegrityViolationException e) {
+      throw new BadRequestException();
+    }
     return airport;
   }
 }
