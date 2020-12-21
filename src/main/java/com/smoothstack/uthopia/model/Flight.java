@@ -45,7 +45,6 @@ public class Flight {
   @Column(name = "capacity")
   private Integer capacity;
 
-  @Transient
   @Formula("capacity")
   private Integer availableSeats;
 
