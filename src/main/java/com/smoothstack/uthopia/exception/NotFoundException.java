@@ -1,6 +1,6 @@
 package com.smoothstack.uthopia.exception;
 
-public class BadRequestException extends Exception {
+public class NotFoundException extends Exception {
   /**
    *
    */
@@ -8,7 +8,7 @@ public class BadRequestException extends Exception {
 
   private String message;
 
-  public BadRequestException(String message) {
+  public NotFoundException(String message) {
     this.message = message;
   }
 
@@ -16,4 +16,5 @@ public class BadRequestException extends Exception {
   public String getMessage() {
     return this.message;
   }
+
 }
