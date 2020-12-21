@@ -1,6 +1,6 @@
 package com.smoothstack.uthopia.dao;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import com.smoothstack.uthopia.model.Flight;
@@ -12,14 +12,18 @@ public interface FlightDAO extends JpaRepository<Flight, Integer> {
 
   List<Flight> findAllByRouteDestinationId(final String destinationId);
 
-  List<Flight> findAllByDepartureDate(final LocalDate departureDate);
+  List<Flight> findAllByDepartureTimeAfterAndDepartureTimeBefore(final LocalDateTime departureStart,
+      final LocalDateTime departureEnd);
 
   List<Flight> findAllByRouteOriginIdAndRouteDestinationId(final String originId, final String destinationId);
 
-  List<Flight> findAllByRouteOriginIdAndDepartureDate(final String originId, final LocalDate departureDate);
+  List<Flight> findAllByRouteOriginIdAndDepartureTimeAfterAndDepartureTimeBefore(final String originId,
+      final LocalDateTime departureStart, final LocalDateTime departureEnd);
 
-  List<Flight> findAllByRouteDestinationIdAndDepartureDate(final String destinationId, final LocalDate departureDate);
+  List<Flight> findAllByRouteDestinationIdAndDepartureTimeAfterAndDepartureTimeBefore(final String destinationId,
+      final LocalDateTime departureStart, final LocalDateTime departureEnd);
 
-  List<Flight> findAllByRouteOriginIdAndRouteDestinationIdAndDepartureDate(final String originId,
-      final String destinationId, final LocalDate departureDate);
+  List<Flight> findAllByRouteOriginIdAndRouteDestinationIdAndDepartureTimeAfterAndDepartureTimeBefore(
+      final String originId, final String destinationId, final LocalDateTime departureStart,
+      final LocalDateTime departureEnd);
 }
