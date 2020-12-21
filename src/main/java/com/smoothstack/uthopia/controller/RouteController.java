@@ -38,8 +38,8 @@ public class RouteController {
   }
 
   @PostMapping
-  public @ResponseBody Route getRouteById(@RequestBody final Route route) throws BadRequestException {
-    return routeService.create(route);
+  public @ResponseBody ResponseEntity<Route> getRouteById(@RequestBody final Route route) throws BadRequestException {
+    return new ResponseEntity<>(routeService.create(route), HttpStatus.CREATED);
   }
 
   @GetMapping("/{id}")

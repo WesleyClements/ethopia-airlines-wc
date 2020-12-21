@@ -10,6 +10,8 @@ import com.smoothstack.uthopia.model.Flight;
 import com.smoothstack.uthopia.service.FlightService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -41,8 +43,9 @@ public class FlightController {
   }
 
   @PostMapping
-  public @ResponseBody Flight createFlight(@RequestBody final Flight flight) throws BadRequestException {
-    return flightService.create(flight);
+  public @ResponseBody ResponseEntity<Flight> createFlight(@RequestBody final Flight flight)
+      throws BadRequestException {
+    return new ResponseEntity<>(flightService.create(flight), HttpStatus.CREATED);
   }
 
   @GetMapping("/{id}")

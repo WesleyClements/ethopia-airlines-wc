@@ -8,6 +8,8 @@ import com.smoothstack.uthopia.model.Airport;
 import com.smoothstack.uthopia.service.AirportService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,8 +30,9 @@ public class AirportController {
   }
 
   @PostMapping
-  public @ResponseBody Airport createAirport(@RequestBody final Airport airport) throws BadRequestException {
-    return airportService.create(airport);
+  public @ResponseBody ResponseEntity<Airport> createAirport(@RequestBody final Airport airport)
+      throws BadRequestException {
+    return new ResponseEntity<>(airportService.create(airport), HttpStatus.CREATED);
   }
 
   @GetMapping("/{id}")
