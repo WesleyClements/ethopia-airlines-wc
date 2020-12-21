@@ -3,6 +3,8 @@ package com.smoothstack.uthopia.controller;
 import com.smoothstack.uthopia.exception.BadRequestException;
 import com.smoothstack.uthopia.exception.NotFoundException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.HttpMediaTypeNotAcceptableException;
@@ -14,6 +16,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ControllerAdvice
 public class ControllerExceptionHandler {
+
+  Logger logger = LoggerFactory.getLogger(ControllerExceptionHandler.class);
+
   @ResponseStatus(HttpStatus.NOT_FOUND)
   @ExceptionHandler(NotFoundException.class)
   public void handleEntityNotFound() {
@@ -42,7 +47,6 @@ public class ControllerExceptionHandler {
   @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
   @ExceptionHandler(Exception.class)
   public void handle(final Exception e) {
-    System.out.println(e.getClass());
-    System.out.println(e.getMessage());
+    logger.error(e.getMessage(), e.getClass());
   }
 }
