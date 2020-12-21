@@ -25,11 +25,11 @@ public class RouteService {
 
   public List<Route> findAllWithOriginAndDestination(final String origin, final String destination) {
     if (destination == null)
-      return routeDAO.findAllByOrigin(origin);
+      return routeDAO.findAllByOriginId(origin);
     else if (origin == null)
-      return routeDAO.findAllByDestination(destination);
+      return routeDAO.findAllByDestinationId(destination);
     else
-      return routeDAO.findAllByOriginAndDestination(origin, destination);
+      return routeDAO.findAllByOriginIdAndDestinationId(origin, destination);
   }
 
   public Route findById(final Integer id) throws NotFoundException {

@@ -10,9 +10,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RouteDAO extends JpaRepository<Route, Integer> {
 
-  List<Route> findAllByOrigin(final String origin);
+  List<Route> findAllByOriginId(final String origin);
 
-  List<Route> findAllByDestination(final String destination);
+  List<Route> findAllByDestinationId(final String destination);
 
-  List<Route> findAllByOriginAndDestination(final String originIataId, final String destinationIataId);
+  List<Route> findAllByOriginIdAndDestinationId(final String originIataId, final String destinationIataId);
 }
