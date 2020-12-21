@@ -1,5 +1,6 @@
 package com.smoothstack.uthopia.model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -36,6 +37,10 @@ public class Flight {
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "route_id")
   private Route route;
+
+  @JsonIgnore
+  @Column(name = "departure_time", insertable = false, updatable = false)
+  private LocalDate departureDate;
 
   @JsonProperty("departure")
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Etc/GMT")
@@ -82,6 +87,10 @@ public class Flight {
 
   public String getDestination() {
     return this.route.getDestinationId();
+  }
+
+  public LocalDate getDepartureDate() {
+    return departureDate;
   }
 
   public LocalDateTime getDepartureTime() {
