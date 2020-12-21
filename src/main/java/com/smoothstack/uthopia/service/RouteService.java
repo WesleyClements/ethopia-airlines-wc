@@ -54,7 +54,6 @@ public class RouteService {
         final ConstraintViolationException cve = (ConstraintViolationException) e.getCause();
         if (cve.getErrorCode() == 1062)
           throw new StateConflictException(route.getOriginId() + " to " + route.getDestinationId() + " already exists");
-        System.out.println(cve);
       }
       throw new BadRequestException();
     }
