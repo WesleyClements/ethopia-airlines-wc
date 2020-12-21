@@ -10,6 +10,7 @@ import com.smoothstack.uthopia.model.Airport;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -35,5 +36,13 @@ public class AirportService {
       throw new BadRequestException();
     }
     return airport;
+  }
+
+  public void delete(final String id) throws NotFoundException {
+    try {
+      airportDAO.deleteById(id);
+    } catch (EmptyResultDataAccessException e) {
+      throw new NotFoundException();
+    }
   }
 }

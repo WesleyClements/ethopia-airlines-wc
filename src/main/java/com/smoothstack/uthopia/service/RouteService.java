@@ -10,6 +10,7 @@ import com.smoothstack.uthopia.model.Route;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.stereotype.Service;
 
@@ -48,5 +49,13 @@ public class RouteService {
       throw new BadRequestException();
     }
     return route;
+  }
+
+  public void delete(final Integer id) throws NotFoundException {
+    try {
+      routeDAO.deleteById(id);
+    } catch (EmptyResultDataAccessException e) {
+      throw new NotFoundException();
+    }
   }
 }
