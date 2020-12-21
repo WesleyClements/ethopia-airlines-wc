@@ -24,7 +24,9 @@ public class RouteService {
   }
 
   public List<Route> findAllWithOriginAndDestination(final String origin, final String destination) {
-    if (destination == null)
+    if (destination == null && origin == null)
+      return routeDAO.findAll();
+    else if (destination == null)
       return routeDAO.findAllByOriginId(origin);
     else if (origin == null)
       return routeDAO.findAllByDestinationId(destination);
