@@ -15,6 +15,7 @@ import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 @ControllerAdvice
 public class ControllerExceptionHandler {
@@ -22,7 +23,7 @@ public class ControllerExceptionHandler {
   Logger logger = LoggerFactory.getLogger(ControllerExceptionHandler.class);
 
   @ResponseStatus(HttpStatus.NOT_FOUND)
-  @ExceptionHandler(NotFoundException.class)
+  @ExceptionHandler({ NotFoundException.class, MethodArgumentTypeMismatchException.class })
   public void handleEntityNotFound(final Exception e) {
     logger.error(e.getClass().toString());
   }
