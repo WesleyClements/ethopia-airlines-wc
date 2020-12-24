@@ -22,7 +22,7 @@ import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest(classes = UthopiaAirlinesApplication.class)
-public class RouteServiceTest {
+public class RouteServiceTests {
 
   @Mock
   RouteDAO routeDAO;
@@ -30,30 +30,39 @@ public class RouteServiceTest {
   @InjectMocks
   RouteService routeService;
 
+  List<Route> routes;
+
   List<Route> getRoutes() {
-    final List<Route> routes = new ArrayList<Route>();
+    if (routes != null)
+      return routes;
+    routes = new ArrayList<Route>();
     {
-      Route route = new Route();
+      final Route route = new Route();
       route.setRouteId(1);
       route.setOriginId("AAA");
       route.setOriginId("AAB");
       routes.add(route);
     }
     {
-      Route route = new Route();
+      final Route route = new Route();
       route.setRouteId(2);
       route.setOriginId("AAC");
       route.setOriginId("AAB");
       routes.add(route);
     }
     {
-      Route route = new Route();
+      final Route route = new Route();
       route.setRouteId(3);
       route.setOriginId("AAA");
       route.setOriginId("AAC");
       routes.add(route);
     }
     return routes;
+  }
+
+  Route getRouteById(final Integer id) {
+    return getRoutes().stream().filter(route -> route.getRouteId() == id)
+        .collect(Collectors.toList()).get(0);
   }
 
 
@@ -94,15 +103,13 @@ public class RouteServiceTest {
   }
 
   @Test
-  void findById() throws NotFoundException {
-    final Integer id = 2;
+  void findRouteById() throws NotFoundException {
+    final Integer existentId = 2;
     final Integer nonExistentId = 4;
-    final Route routeWithId = getRoutes().stream().filter(route -> route.getRouteId() == id)
-        .collect(Collectors.toList()).get(0);
-    System.out.println(routeWithId.getRouteId());
-    Mockito.when(routeDAO.findById(id)).thenReturn(Optional.of(routeWithId));
+    final Route routeWithId = getRouteById(existentId);
+    Mockito.when(routeDAO.findById(existentId)).thenReturn(Optional.of(routeWithId));
     Mockito.when(routeDAO.findById(nonExistentId)).thenReturn(Optional.empty());
-    assertEquals(routeWithId, routeService.findById(id));
+    assertEquals(routeWithId, routeService.findById(existentId));
     assertThrows(NotFoundException.class, () -> routeService.findById(nonExistentId));
   }
 
