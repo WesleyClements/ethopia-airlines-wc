@@ -39,6 +39,10 @@ public class Route {
     return routeId;
   }
 
+  public void setRouteId(final Integer routeId) {
+    this.routeId = routeId;
+  }
+
   public String getOriginId() {
     return originId;
   }
