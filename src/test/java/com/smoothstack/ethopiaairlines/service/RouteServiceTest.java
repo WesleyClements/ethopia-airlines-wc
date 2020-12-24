@@ -1,5 +1,6 @@
 package com.smoothstack.ethopiaairlines.service;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -9,7 +10,9 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import com.smoothstack.uthopia.UthopiaAirlinesApplication;
 import com.smoothstack.uthopia.dao.RouteDAO;
+import com.smoothstack.uthopia.exception.BadRequestException;
 import com.smoothstack.uthopia.exception.NotFoundException;
+import com.smoothstack.uthopia.exception.StateConflictException;
 import com.smoothstack.uthopia.model.Route;
 import com.smoothstack.uthopia.service.RouteService;
 import org.junit.jupiter.api.Test;
@@ -104,7 +107,17 @@ public class RouteServiceTest {
   }
 
   @Test
-  void createRoute() {
+  void createRoute() throws BadRequestException, StateConflictException {
+    final Route newRoute = new Route();
+    newRoute.setOriginId("AAB");
+    newRoute.setDestinationId("AAC");
+    Mockito.when(routeDAO.save(newRoute)).thenReturn(newRoute);
+    assertEquals(newRoute, routeService.create(newRoute));
+  }
 
+  @Test
+  void deleteRoute() {
+    final Integer idToDelete = 2;
+    assertDoesNotThrow(() -> routeService.delete(idToDelete));
   }
 }
