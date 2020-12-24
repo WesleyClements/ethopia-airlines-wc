@@ -23,6 +23,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.EmptyResultDataAccessException;
 
 @SpringBootTest(classes = UthopiaAirlinesApplication.class)
 public class FlightServiceTests {
@@ -134,7 +135,11 @@ public class FlightServiceTests {
 
   @Test
   void deleteFlight() {
-    final Integer idToDelete = 2;
-    assertDoesNotThrow(() -> flightService.delete(idToDelete));
+    final Integer existentIdToDelete = 2;
+    final Integer nonExistentIdToDelete = 4;
+    Mockito.doThrow(EmptyResultDataAccessException.class).when(flightDAO)
+        .deleteById(nonExistentIdToDelete);
+    assertDoesNotThrow(() -> flightService.delete(existentIdToDelete));
+    assertThrows(NotFoundException.class, () -> flightService.delete(nonExistentIdToDelete));
   }
 }
