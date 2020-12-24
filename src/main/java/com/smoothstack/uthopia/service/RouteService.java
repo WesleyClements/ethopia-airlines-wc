@@ -25,7 +25,8 @@ public class RouteService {
     return routeDAO.findAll();
   }
 
-  public List<Route> findAllWithOriginAndDestination(final String origin, final String destination) {
+  public List<Route> findAllWithOriginAndDestination(final String origin,
+      final String destination) {
     if (destination == null && origin == null)
       return routeDAO.findAll();
     else if (destination == null)
@@ -45,19 +46,18 @@ public class RouteService {
 
   public Route create(final Route route) throws BadRequestException, StateConflictException {
     try {
-      routeDAO.save(route);
+      return routeDAO.save(route);
     } catch (JpaSystemException e) {
-      System.out.println(e.getCause());
       throw new BadRequestException(e.getMessage());
     } catch (DataIntegrityViolationException e) {
       if (e.getCause() instanceof ConstraintViolationException) {
         final ConstraintViolationException cve = (ConstraintViolationException) e.getCause();
         if (cve.getErrorCode() == 1062)
-          throw new StateConflictException(route.getOriginId() + " to " + route.getDestinationId() + " already exists");
+          throw new StateConflictException(
+              route.getOriginId() + " to " + route.getDestinationId() + " already exists");
       }
       throw new BadRequestException();
     }
-    return route;
   }
 
   public void delete(final Integer id) throws NotFoundException {
